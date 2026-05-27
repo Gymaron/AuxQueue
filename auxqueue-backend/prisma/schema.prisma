@@ -1,5 +1,3 @@
-// prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/client"
@@ -9,10 +7,9 @@ datasource db {
   provider = "sqlite"
 }
 
-// SILVER CHALLENGE: Roles and Permissions
 model Role {
   id          String       @id @default(uuid())
-  name        String       @unique // e.g., "ADMIN" or "USER"
+  name        String       @unique 
   permissions Permission[]
   users       User[]
 }
@@ -24,24 +21,26 @@ model Permission {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String @unique
-  email    String @unique
-  password String
+  id               String    @id @default(uuid())
+  name             String    @unique
+  email            String    @unique
+  password         String
   
-  // Link User to Role
-  roleId   String?
-  role     Role?   @relation(fields: [roleId], references: [id])
+  twoFactorPin     String?
+  twoFactorExpires DateTime?
+  recoveryToken    String?
+  recoveryExpires  DateTime?
   
-  // 1-to-Many Relationship: A user can add many songs
-  songs    Song[]
+  roleId           String?
+  role             Role?     @relation(fields: [roleId], references: [id])
+  
+  songs            Song[]
 }
 
 model Party {
   id    String @id @default(uuid())
   name  String
   code  String @unique
-  // 1-to-Many Relationship: A party can have many songs
   songs Song[]
 }
 
@@ -55,20 +54,22 @@ model Song {
   votes     Int      @default(0)
   addedAt   DateTime @default(now())
   
-  // Foreign Key to Party
   party     Party?   @relation(fields: [partyCode], references: [code], onDelete: Cascade)
   partyCode String?
 
-  // Foreign Key to User
   user      User?    @relation(fields: [addedBy], references: [name], onDelete: Cascade)
   addedBy   String?
+
+  @@index([partyCode])
+  @@index([addedBy])
+  @@index([genre])
 }
-//Logging and Surveillance
+
 model Log {
   id        String   @id @default(uuid())
   userId    String
-  groupId   String   // "ADMIN" or "USER"
-  action    String   // "ACTION_INFORMATION"
+  groupId   String   
+  action    String   
   timestamp DateTime @default(now())
 }
 

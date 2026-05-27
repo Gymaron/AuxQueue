@@ -3,34 +3,33 @@ import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { faker } from '@faker-js/faker';
+import bcrypt from 'bcryptjs';
 
-// FIXED: Using the correct Prisma 7 adapter initialization
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dbPath = path.join(__dirname, '..', 'dev.db');
 const adapter = new PrismaBetterSqlite3({ url: `file:${dbPath}` });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('🌱 Starting database seeding...');
+  console.log('🌱 Starting MASSIVE database seeding for Gold Challenge...');
 
-  // 1. Create Default Roles
   const adminRole = await prisma.role.upsert({ where: { name: 'ADMIN' }, update: {}, create: { name: 'ADMIN' } });
   const userRole = await prisma.role.upsert({ where: { name: 'USER' }, update: {}, create: { name: 'USER' } });
 
-  // 2. Create Test Users
+  const hashedPassword = await bcrypt.hash('Kecske123', 10);
+
   const aron = await prisma.user.upsert({
     where: { email: 'aron@test.com' },
     update: {},
-    create: { name: 'Aron', email: 'aron@test.com', password: 'Kecske123', roleId: adminRole.id }
+    create: { name: 'Aron', email: 'aron@test.com', password: hashedPassword, roleId: adminRole.id }
   });
 
   const alice = await prisma.user.upsert({
     where: { email: 'alice@test.com' },
     update: {},
-    create: { name: 'Alice', email: 'alice@test.com', password: 'Kecske123', roleId: userRole.id }
+    create: { name: 'Alice', email: 'alice@test.com', password: hashedPassword, roleId: userRole.id }
   });
 
-  // 3. Create Demo Parties
   const party1 = await prisma.party.upsert({
     where: { code: 'ABC123' },
     update: {},
@@ -43,23 +42,45 @@ async function main() {
     create: { name: 'Study Session', code: 'XYZ789' }
   });
 
-  // 4. Generate Fake Songs for Party 1
-  const existingSongs = await prisma.song.count({ where: { partyCode: 'ABC123' } });
-  if (existingSongs === 0) {
-    const fakeSongs = Array.from({ length: 5 }).map(() => ({
-      title: faker.music.songName(),
-      artist: faker.music.artist(),
-      album: faker.lorem.words({ min: 1, max: 3 }),
-      genre: faker.music.genre(),
-      duration: `${faker.number.int({ min: 2, max: 5 })}:${faker.number.int({ min: 10, max: 59 })}`,
-      addedBy: aron.name,
-      partyCode: party1.code,
-      votes: faker.number.int({ min: 5, max: 50 }),
+  const currentSongs = await prisma.song.count({ where: { partyCode: 'ABC123' } });
+  
+  if (currentSongs < 10000) {
+    console.log('🧹 Clearing old songs to ensure exactly 10,000 for the test...');
+    await prisma.song.deleteMany({ where: { partyCode: 'ABC123' } });
+
+    console.log('👥 Generating 50 completely unique users...');
+    const fakeUsers = Array.from({ length: 50 }).map((_, idx) => ({
+      name: `TestUser_${idx}_${faker.string.alphanumeric(4)}`, 
+      email: `user${idx}_${faker.string.alphanumeric(4)}@test.com`, 
+      password: hashedPassword,
+      roleId: userRole.id
     }));
-    await prisma.song.createMany({ data: fakeSongs });
+    await prisma.user.createMany({ data: fakeUsers });
+    
+    // Fetch all users to assign them to songs
+    const allUsers = await prisma.user.findMany();
+
+    console.log('💿 Generating exactly 10,000 songs in safe SQLite batches (20 batches of 500)...');
+    
+    const BATCH_SIZE = 500;
+    for (let i = 0; i < 20; i++) {
+      const fakeSongs = Array.from({ length: BATCH_SIZE }).map(() => ({
+        title: faker.music.songName(),
+        artist: faker.music.artist(),
+        album: faker.lorem.words({ min: 1, max: 3 }),
+        genre: faker.music.genre(),
+        duration: `${faker.number.int({ min: 2, max: 5 })}:${faker.number.int({ min: 10, max: 59 })}`,
+        addedBy: allUsers[Math.floor(Math.random() * allUsers.length)].name,
+        partyCode: 'ABC123',
+        votes: faker.number.int({ min: 0, max: 1000 }),
+      }));
+      
+      await prisma.song.createMany({ data: fakeSongs });
+      console.log(`⏳ Batch ${i + 1}/20 complete... (${(i + 1) * 500} songs)`);
+    }
   }
 
-  console.log('✅ Seeding finished successfully!');
+  console.log('✅ Massive seeding finished successfully!');
 }
 
 main()

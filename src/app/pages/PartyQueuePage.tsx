@@ -20,8 +20,9 @@ export function PartyQueuePage() {
   const [currentMessage, setCurrentMessage] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const SERVER_IP = import.meta.env.VITE_SERVER_IP || 'localhost';
-  const CHAT_API_URL = `http://${SERVER_IP}:3000/api/chat`;
+  const SERVER_IP = import.meta.env.VITE_SERVER_IP || '172.30.243.204';
+  const SERVER_PORT = import.meta.env.VITE_SERVER_PORT || '3443';
+  const CHAT_API_URL = `https://${SERVER_IP}:${SERVER_PORT}/api/chat`;
 
   const fetchQueue = async () => {
     try {
@@ -74,7 +75,7 @@ export function PartyQueuePage() {
       });
       setCurrentMessage('');
     } catch (err) {
-      console.error(err);
+      console.error('Failed to send message');
     }
   };
 
@@ -95,9 +96,6 @@ export function PartyQueuePage() {
   const handleStartEdit = (song: any) => { setEditingSongId(song.id); setEditForm({ title: song.title, artist: song.artist }); };
   const handleCancelEdit = () => { setEditingSongId(null); setEditForm({ title: '', artist: '' }); };
   const handleSaveEdit = async (id: string) => { await api.updateSong(id, { title: editForm.title, artist: editForm.artist }); setEditingSongId(null); fetchQueue(); };
-
-  const allQueueSongs = nowPlaying ? [nowPlaying, ...queue] : queue;
-  const uniqueContributors = new Set(allQueueSongs.map(song => song.addedBy)).size;
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">

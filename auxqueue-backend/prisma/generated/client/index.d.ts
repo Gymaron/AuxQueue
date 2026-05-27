@@ -3655,6 +3655,10 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    twoFactorPin: string | null
+    twoFactorExpires: Date | null
+    recoveryToken: string | null
+    recoveryExpires: Date | null
     roleId: string | null
   }
 
@@ -3663,6 +3667,10 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    twoFactorPin: string | null
+    twoFactorExpires: Date | null
+    recoveryToken: string | null
+    recoveryExpires: Date | null
     roleId: string | null
   }
 
@@ -3671,6 +3679,10 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    twoFactorPin: number
+    twoFactorExpires: number
+    recoveryToken: number
+    recoveryExpires: number
     roleId: number
     _all: number
   }
@@ -3681,6 +3693,10 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    twoFactorPin?: true
+    twoFactorExpires?: true
+    recoveryToken?: true
+    recoveryExpires?: true
     roleId?: true
   }
 
@@ -3689,6 +3705,10 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    twoFactorPin?: true
+    twoFactorExpires?: true
+    recoveryToken?: true
+    recoveryExpires?: true
     roleId?: true
   }
 
@@ -3697,6 +3717,10 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    twoFactorPin?: true
+    twoFactorExpires?: true
+    recoveryToken?: true
+    recoveryExpires?: true
     roleId?: true
     _all?: true
   }
@@ -3778,6 +3802,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin: string | null
+    twoFactorExpires: Date | null
+    recoveryToken: string | null
+    recoveryExpires: Date | null
     roleId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -3803,6 +3831,10 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    twoFactorPin?: boolean
+    twoFactorExpires?: boolean
+    recoveryToken?: boolean
+    recoveryExpires?: boolean
     roleId?: boolean
     role?: boolean | User$roleArgs<ExtArgs>
     songs?: boolean | User$songsArgs<ExtArgs>
@@ -3814,6 +3846,10 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    twoFactorPin?: boolean
+    twoFactorExpires?: boolean
+    recoveryToken?: boolean
+    recoveryExpires?: boolean
     roleId?: boolean
     role?: boolean | User$roleArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -3823,6 +3859,10 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    twoFactorPin?: boolean
+    twoFactorExpires?: boolean
+    recoveryToken?: boolean
+    recoveryExpires?: boolean
     roleId?: boolean
     role?: boolean | User$roleArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -3832,10 +3872,14 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    twoFactorPin?: boolean
+    twoFactorExpires?: boolean
+    recoveryToken?: boolean
+    recoveryExpires?: boolean
     roleId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "roleId", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "twoFactorPin" | "twoFactorExpires" | "recoveryToken" | "recoveryExpires" | "roleId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | User$roleArgs<ExtArgs>
     songs?: boolean | User$songsArgs<ExtArgs>
@@ -3859,6 +3903,10 @@ export namespace Prisma {
       name: string
       email: string
       password: string
+      twoFactorPin: string | null
+      twoFactorExpires: Date | null
+      recoveryToken: string | null
+      recoveryExpires: Date | null
       roleId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -4289,6 +4337,10 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly twoFactorPin: FieldRef<"User", 'String'>
+    readonly twoFactorExpires: FieldRef<"User", 'DateTime'>
+    readonly recoveryToken: FieldRef<"User", 'String'>
+    readonly recoveryExpires: FieldRef<"User", 'DateTime'>
     readonly roleId: FieldRef<"User", 'String'>
   }
     
@@ -9018,6 +9070,10 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    twoFactorPin: 'twoFactorPin',
+    twoFactorExpires: 'twoFactorExpires',
+    recoveryToken: 'recoveryToken',
+    recoveryExpires: 'recoveryExpires',
     roleId: 'roleId'
   };
 
@@ -9099,16 +9155,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'DateTime'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 
   /**
-   * Reference to a field of type 'DateTime'
+   * Reference to a field of type 'Int'
    */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
@@ -9213,6 +9269,10 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    twoFactorPin?: StringNullableFilter<"User"> | string | null
+    twoFactorExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    recoveryToken?: StringNullableFilter<"User"> | string | null
+    recoveryExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     roleId?: StringNullableFilter<"User"> | string | null
     role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
     songs?: SongListRelationFilter
@@ -9223,6 +9283,10 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    twoFactorPin?: SortOrderInput | SortOrder
+    twoFactorExpires?: SortOrderInput | SortOrder
+    recoveryToken?: SortOrderInput | SortOrder
+    recoveryExpires?: SortOrderInput | SortOrder
     roleId?: SortOrderInput | SortOrder
     role?: RoleOrderByWithRelationInput
     songs?: SongOrderByRelationAggregateInput
@@ -9236,6 +9300,10 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    twoFactorPin?: StringNullableFilter<"User"> | string | null
+    twoFactorExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    recoveryToken?: StringNullableFilter<"User"> | string | null
+    recoveryExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     roleId?: StringNullableFilter<"User"> | string | null
     role?: XOR<RoleNullableScalarRelationFilter, RoleWhereInput> | null
     songs?: SongListRelationFilter
@@ -9246,6 +9314,10 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    twoFactorPin?: SortOrderInput | SortOrder
+    twoFactorExpires?: SortOrderInput | SortOrder
+    recoveryToken?: SortOrderInput | SortOrder
+    recoveryExpires?: SortOrderInput | SortOrder
     roleId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -9260,6 +9332,10 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    twoFactorPin?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twoFactorExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    recoveryToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    recoveryExpires?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     roleId?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
@@ -9579,6 +9655,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     role?: RoleCreateNestedOneWithoutUsersInput
     songs?: SongCreateNestedManyWithoutUserInput
   }
@@ -9588,6 +9668,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     roleId?: string | null
     songs?: SongUncheckedCreateNestedManyWithoutUserInput
   }
@@ -9597,6 +9681,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     role?: RoleUpdateOneWithoutUsersNestedInput
     songs?: SongUpdateManyWithoutUserNestedInput
   }
@@ -9606,6 +9694,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     roleId?: NullableStringFieldUpdateOperationsInput | string | null
     songs?: SongUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -9615,6 +9707,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     roleId?: string | null
   }
 
@@ -9623,6 +9719,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -9630,6 +9730,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     roleId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -9978,6 +10082,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type RoleNullableScalarRelationFilter = {
     is?: RoleWhereInput | null
     isNot?: RoleWhereInput | null
@@ -10003,6 +10118,10 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    twoFactorPin?: SortOrder
+    twoFactorExpires?: SortOrder
+    recoveryToken?: SortOrder
+    recoveryExpires?: SortOrder
     roleId?: SortOrder
   }
 
@@ -10011,6 +10130,10 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    twoFactorPin?: SortOrder
+    twoFactorExpires?: SortOrder
+    recoveryToken?: SortOrder
+    recoveryExpires?: SortOrder
     roleId?: SortOrder
   }
 
@@ -10019,6 +10142,10 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    twoFactorPin?: SortOrder
+    twoFactorExpires?: SortOrder
+    recoveryToken?: SortOrder
+    recoveryExpires?: SortOrder
     roleId?: SortOrder
   }
 
@@ -10037,6 +10164,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type PartyCountOrderByAggregateInput = {
@@ -10353,6 +10494,14 @@ export namespace Prisma {
     connect?: SongWhereUniqueInput | SongWhereUniqueInput[]
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type RoleUpdateOneWithoutUsersNestedInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
@@ -10375,10 +10524,6 @@ export namespace Prisma {
     update?: SongUpdateWithWhereUniqueWithoutUserInput | SongUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SongUpdateManyWithWhereWithoutUserInput | SongUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SongScalarWhereInput | SongScalarWhereInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type SongUncheckedUpdateManyWithoutUserNestedInput = {
@@ -10537,6 +10682,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
@@ -10563,6 +10719,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -10637,6 +10807,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     songs?: SongCreateNestedManyWithoutUserInput
   }
 
@@ -10645,6 +10819,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     songs?: SongUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10705,6 +10883,10 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    twoFactorPin?: StringNullableFilter<"User"> | string | null
+    twoFactorExpires?: DateTimeNullableFilter<"User"> | Date | string | null
+    recoveryToken?: StringNullableFilter<"User"> | string | null
+    recoveryExpires?: DateTimeNullableFilter<"User"> | Date | string | null
     roleId?: StringNullableFilter<"User"> | string | null
   }
 
@@ -10925,6 +11107,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     role?: RoleCreateNestedOneWithoutUsersInput
   }
 
@@ -10933,6 +11119,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
     roleId?: string | null
   }
 
@@ -10980,6 +11170,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     role?: RoleUpdateOneWithoutUsersNestedInput
   }
 
@@ -10988,6 +11182,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     roleId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -10996,6 +11194,10 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    twoFactorPin?: string | null
+    twoFactorExpires?: Date | string | null
+    recoveryToken?: string | null
+    recoveryExpires?: Date | string | null
   }
 
   export type PermissionUpdateWithoutRolesInput = {
@@ -11018,6 +11220,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     songs?: SongUpdateManyWithoutUserNestedInput
   }
 
@@ -11026,6 +11232,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     songs?: SongUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11034,6 +11244,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    twoFactorPin?: NullableStringFieldUpdateOperationsInput | string | null
+    twoFactorExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recoveryToken?: NullableStringFieldUpdateOperationsInput | string | null
+    recoveryExpires?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type RoleUpdateWithoutPermissionsInput = {

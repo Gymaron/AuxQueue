@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { ShieldAlert, Activity, UserX } from 'lucide-react';
+import { ShieldAlert, Activity, UserX, Bot } from 'lucide-react';
 
 export function AdminDashboard() {
   const [logs, setLogs] = useState<any[]>([]);
   const [suspiciousUsers, setSuspiciousUsers] = useState<any[]>([]);
 
   const fetchAdminData = () => {
-    const SERVER_IP = import.meta.env.VITE_SERVER_IP || 'localhost';
-    const GRAPHQL_URL = `http://${SERVER_IP}:3000/graphql`;
+    const SERVER_IP = import.meta.env.VITE_SERVER_IP || '172.30.243.204';
+    const SERVER_PORT = import.meta.env.VITE_SERVER_PORT || '3443';
+    const GRAPHQL_URL = `https://${SERVER_IP}:${SERVER_PORT}/graphql`;
     const token = localStorage.getItem('token');
 
     fetch(GRAPHQL_URL, {
@@ -56,13 +57,19 @@ export function AdminDashboard() {
             {suspiciousUsers.length === 0 ? (
               <p className="text-[#b3b3b3]">No suspicious activity detected yet.</p>
             ) : (
-              suspiciousUsers.map((user: any) => (
-                <div key={user.id} className="bg-[#282828] p-4 rounded-lg border-l-4 border-red-500">
-                  <p className="font-bold text-lg">{user.userName}</p>
-                  <p className="text-sm text-[#b3b3b3]">Reason: {user.reason}</p>
-                  <p className="text-xs text-gray-500 mt-2">{new Date(Number(user.flaggedAt)).toLocaleString()}</p>
-                </div>
-              ))
+              suspiciousUsers.map((user: any) => {
+                const isAI = user.reason.includes('AI SENTINEL');
+                return (
+                  <div key={user.id} className={`bg-[#282828] p-4 rounded-lg border-l-4 ${isAI ? 'border-purple-500' : 'border-red-500'}`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      {isAI && <Bot className="w-5 h-5 text-purple-500" />}
+                      <p className="font-bold text-lg">{user.userName}</p>
+                    </div>
+                    <p className={`text-sm ${isAI ? 'text-purple-300' : 'text-[#b3b3b3]'}`}>Reason: {user.reason}</p>
+                    <p className="text-xs text-gray-500 mt-2">{new Date(Number(user.flaggedAt)).toLocaleString()}</p>
+                  </div>
+                );
+              })
             )}
           </div>
         </div>

@@ -4,10 +4,12 @@ import cors from 'cors';
 import { graphqlHTTP } from 'express-graphql';
 import { WebSocketServer } from 'ws';
 import mongoose from 'mongoose';
+import https from 'https';
+import fs from 'fs';
 import { schema, rootValue } from './graphql.js';
 
-const SERVER_IP = process.env.SERVER_IP || 'localhost';
-const PORT = process.env.PORT || 3000;
+const SERVER_IP = process.env.SERVER_IP || '172.30.243.204';
+const PORT = process.env.PORT || 3443;
 
 const app = express();
 app.use(cors());
@@ -46,14 +48,18 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', graphqlHTTP((req) => ({
   schema,
   rootValue,
+  context: { req },
   graphiql: true,
-}));
+})));
 
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 GraphQL & WS Server running on http://${SERVER_IP}:${PORT}`);
+const server = https.createServer({
+  key: fs.readFileSync(`${SERVER_IP}-key.pem`),
+  cert: fs.readFileSync(`${SERVER_IP}.pem`)
+}, app).listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 SECURE HTTPS Server running on https://${SERVER_IP}:${PORT}/graphql`);
 });
 
 const wss = new WebSocketServer({ server });
