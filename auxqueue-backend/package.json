@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "build": "npx prisma generate && npx prisma db push && npx prisma db seed",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --forceExit"
   },
   "dependencies": {
