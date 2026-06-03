@@ -5,6 +5,7 @@ import { graphqlHTTP } from 'express-graphql';
 import { WebSocketServer } from 'ws';
 import mongoose from 'mongoose';
 import https from 'https';
+import http from 'http';
 import fs from 'fs';
 import { schema, rootValue } from './graphql.js';
 
@@ -12,12 +13,21 @@ const SERVER_IP = process.env.SERVER_IP || '172.30.243.204';
 const PORT = process.env.PORT || 3443;
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    'https://aux-queue-frontend.vercel.app',
+    'http://localhost:5173'
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/auxqueue_chat')
-  .then(() => console.log('✅ Connected to MongoDB (Chat Database)'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+/* mongoose.connect('mongodb://127.0.0.1:27017/auxqueue_chat')
+  .then(() => console.log('Connected to MongoDB (Chat Database)'))
+  .catch(err => console.error('MongoDB connection error:', err));
+*/
 
 const chatSchema = new mongoose.Schema({
   partyCode: String,
@@ -55,11 +65,23 @@ app.use('/graphql', graphqlHTTP((req) => ({
   graphiql: true,
 })));
 
-const server = https.createServer({
-  key: fs.readFileSync(`${SERVER_IP}-key.pem`),
-  cert: fs.readFileSync(`${SERVER_IP}.pem`)
-}, app).listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 SECURE HTTPS Server running on https://${SERVER_IP}:${PORT}/graphql`);
+let server;
+
+if (process.env.SERVER_IP === '0.0.0.0') {
+  server = http.createServer(app);
+} else {
+  try {
+    server = https.createServer({
+      key: fs.readFileSync(`${SERVER_IP}-key.pem`),
+      cert: fs.readFileSync(`${SERVER_IP}.pem`)
+    }, app);
+  } catch (error) {
+    server = http.createServer(app);
+  }
+}
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 const wss = new WebSocketServer({ server });
