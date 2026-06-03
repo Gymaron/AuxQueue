@@ -192,7 +192,7 @@ export function PartyQueuePage() {
           </div>
         </div>
 
-        <div className="bg-[#181818] rounded-xl flex flex-col h-[700px] border border-[#282828] sticky top-24">
+        <div className="bg-[#181818] rounded-xl flex flex-col h-[calc(100vh-8rem)] border border-[#282828] sticky top-24">
           <div className="p-4 border-b border-[#282828] flex items-center gap-2">
             <Users className="w-5 h-5 text-[#1DB954]" />
             <h2 className="font-bold text-lg">Live Chat</h2>
