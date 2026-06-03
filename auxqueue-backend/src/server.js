@@ -11,6 +11,7 @@ import { schema, rootValue } from './graphql.js';
 
 const SERVER_IP = process.env.SERVER_IP || '172.30.243.204';
 const PORT = process.env.PORT || 3443;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/auxqueue_chat';
 
 const app = express();
 
@@ -24,10 +25,7 @@ app.use(cors({
 
 app.use(express.json());
 
-/* mongoose.connect('mongodb://127.0.0.1:27017/auxqueue_chat')
-  .then(() => console.log('Connected to MongoDB (Chat Database)'))
-  .catch(err => console.error('MongoDB connection error:', err));
-*/
+mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
 const chatSchema = new mongoose.Schema({
   partyCode: String,
@@ -42,7 +40,7 @@ app.get('/api/chat/:partyCode', async (req, res) => {
     const messages = await ChatMessage.find({ partyCode: req.params.partyCode }).sort({ timestamp: 1 }).limit(50);
     res.json(messages);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch chat' });
+    res.status(500).json({ error: 'Failed' });
   }
 });
 
@@ -54,7 +52,7 @@ app.post('/api/chat', async (req, res) => {
     broadcast({ type: 'CHAT_MESSAGE', chat: newChat });
     res.status(201).json(newChat);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to save chat message' });
+    res.status(500).json({ error: 'Failed' });
   }
 });
 
@@ -80,9 +78,7 @@ if (process.env.SERVER_IP === '0.0.0.0') {
   }
 }
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+server.listen(PORT, '0.0.0.0', () => {});
 
 const wss = new WebSocketServer({ server });
 export const broadcast = (data) => {

@@ -34,9 +34,7 @@ export function PartyQueuePage() {
       } else {
         setQueue(sorted.filter((s: any) => s.id !== nowPlaying?.id));
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {
@@ -46,7 +44,7 @@ export function PartyQueuePage() {
     fetch(`${CHAT_API_URL}/${code}`)
       .then(res => res.json())
       .then(data => setChatMessages(data))
-      .catch(console.error);
+      .catch(() => {});
 
     const unsubscribe = api.subscribe((data) => {
       if (data.type === 'CHAT_MESSAGE' && data.chat.partyCode === code) {
@@ -74,9 +72,7 @@ export function PartyQueuePage() {
         body: JSON.stringify({ partyCode: code, user: userName, message: currentMessage })
       });
       setCurrentMessage('');
-    } catch (err) {
-      console.error('Failed to send message');
-    }
+    } catch (err) {}
   };
 
   const handleVote = async (id: string, delta: number) => { await api.voteSong(id, delta); fetchQueue(); };
