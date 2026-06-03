@@ -163,7 +163,7 @@ export const rootValue = {
     if (!valid) throw new Error('Invalid credentials');
     
     const pin = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log(`\n🔒 [3-WAY AUTH] 2FA PIN for ${email}: ${pin}\n`);
+    console.warn(`\n🔒 [3-WAY AUTH] 2FA PIN for ${email}: ${pin}\n`);
     
     await prisma.user.update({
       where: { id: user.id },
